@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0">
+  <link rel="stylesheet" type="text/css" href="Fe.css" />
+  <title>Todo List</title>
+</head>
+<body>
+
+  <h2>What's your plan for today?</h2>
+  
+  <input type="text" id="addInput" placeholder="Enter your priorities for today">
+  <button onclick="addTask()">Add Task</button>
+  
+  <ul id="addList"></ul>
+
+  <script>
+    function addTask() {
+      var addInput = document.getElementById("addInput");
+      var addList = document.getElementById("addList");
+      
+      if (addInput.value.trim() !== "") {
+        var listItem = document.createElement("li");
+        listItem.innerHTML = addInput.value + " <button onclick=\"deleteTask(this)\">Delete</button>";
+        addList.appendChild(listItem);
+        addInput.value = "";
+        saveData();
+      }
+    }
+
+    function deleteTask(button) {
+      var listItem = button.parentNode;
+      var addList = listItem.parentNode;
+      addList.removeChild(listItem);
+      saveData();
+    }
+    function saveData(){
+      localStorage.setItem("data",addList.innerHTML);
+
+    }
+    function showTask(){
+      addList.innerHTML= localStorage.getItem("data");
+    }
+    showTask();
+    
+    
+  </script>
+
+
+
+</body>
+</html>
